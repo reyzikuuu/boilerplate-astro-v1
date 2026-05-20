@@ -147,10 +147,26 @@ const {
       document.addEventListener('DOMContentLoaded', () => {
         // Pastikan fungsi trackMetaEvent tersedia
         if (typeof window.trackMetaEvent === 'function') {
+          // 1. Auto-track ViewContent saat halaman dibuka
           window.trackMetaEvent('ViewContent', {
             content_name: document.title,
             content_category: 'Landing Page',
           });
+        }
+      });
+
+      // 2. GLOBAL WHATSAPP TRACKING (Lead Event)
+      // Otomatis melacak setiap klik pada tombol/link yang mengarah ke WhatsApp
+      document.addEventListener('click', (e) => {
+        const link = (e.target as Element).closest('a');
+        if (link && (link.href.includes('wa.me') || link.href.includes('api.whatsapp.com'))) {
+          if (typeof window.trackMetaEvent === 'function') {
+            window.trackMetaEvent('Lead', {
+              content_name: 'WhatsApp CTA Click',
+              content_category: 'Global Auto-Track',
+              destination_url: link.href
+            });
+          }
         }
       });
     </script>

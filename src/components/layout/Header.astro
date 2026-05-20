@@ -2,6 +2,9 @@
 // =============================================================================
 // HEADER
 // =============================================================================
+import { getWhatsAppUrl } from '@data/siteConfig';
+
+const waUrl = getWhatsAppUrl('Halo Bradwear, saya ingin konsultasi gratis mengenai pembuatan seragam.');
 ---
 
 <header id="site-header" class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[90%] lg:max-w-[73%] z-50 transition-transform duration-500 ease-in-out">
@@ -26,14 +29,14 @@
         
         {/* Desktop Menu (Rata Kanan) */}
         <div class="hidden md:flex gap-6 text-gray-300 text-sm font-medium">
-          <a href="#beranda" class="hover:text-white transition-colors">Beranda</a>
+          <a href="/" class="hover:text-white transition-colors">Beranda</a>
           <a href="/katalog" class="hover:text-white transition-colors">Katalog</a>
-          <a href="#tentang" class="hover:text-white transition-colors">Tentang</a>
+          <a href="/#tentang" class="hover:text-white transition-colors">Tentang</a>
         </div>
 
         {/* CTA / Action */}
         <div class="hidden md:flex">
-          <a href="#wa" class="relative overflow-hidden flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white px-5 py-2.5 rounded-full hover:scale-105 transition-transform duration-300" style="background-color: var(--color-whatsapp); box-shadow: 0 0 15px rgba(37,211,102,0.4);">
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" class="relative overflow-hidden flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white px-5 py-2.5 rounded-full hover:scale-105 transition-transform duration-300" style="background-color: var(--color-whatsapp); box-shadow: 0 0 15px rgba(37,211,102,0.4);">
             <img src="/whatsapp-icon.webp" alt="WhatsApp" class="w-[18px] h-[18px] object-contain" />
             <span>Pesan</span>
             
@@ -67,12 +70,12 @@
     <div class="nav-stroke-border absolute inset-0 rounded-[16px] pointer-events-none p-px"></div>
     
     <div class="relative z-10 flex flex-col gap-6 text-center">
-      <a href="#beranda" class="text-gray-300 hover:text-white text-lg font-medium transition-colors">Beranda</a>
+      <a href="/" class="text-gray-300 hover:text-white text-lg font-medium transition-colors">Beranda</a>
       <a href="/katalog" class="text-gray-300 hover:text-white text-lg font-medium transition-colors">Katalog</a>
-      <a href="#tentang" class="text-gray-300 hover:text-white text-lg font-medium transition-colors">Tentang</a>
+      <a href="/#tentang" class="text-gray-300 hover:text-white text-lg font-medium transition-colors">Tentang</a>
       
       {/* Mobile CTA */}
-      <a href="#wa" class="relative overflow-hidden flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider text-white px-5 py-3 mt-4 rounded-full" style="background-color: var(--color-whatsapp); box-shadow: 0 0 15px rgba(37,211,102,0.4);">
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" class="relative overflow-hidden flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider text-white px-5 py-3 mt-4 rounded-full" style="background-color: var(--color-whatsapp); box-shadow: 0 0 15px rgba(37,211,102,0.4);">
         <img src="/whatsapp-icon.webp" alt="WhatsApp" class="w-5 h-5 object-contain" />
         <span>Konsultasi Gratis!</span>
         
