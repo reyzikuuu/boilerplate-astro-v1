@@ -1,0 +1,273 @@
+---
+// =============================================================================
+// GALLERY SECTION — Infinite Slider Double Row (No Gap)
+// =============================================================================
+// Row 1 (gallery-01): scrolls RIGHT to LEFT
+// Row 2 (gallery-02): scrolls LEFT to RIGHT
+// =============================================================================
+
+const row1 = [
+  "detail-3d-bordir-seragam-pdh-timbul.webp",
+  "detail-3d-bordir-seragam-uniform-timbul-01.webp",
+  "detail-3d-bordir-seragam-uniform-timbul-02.webp",
+  "detail-3d-bordir-seragam-uniform-timbul-04.webp",
+  "detail-3d-bordir-seragam-uniform-timbul.webp",
+  "kemeja-tactical-custom-satuan-premium-01.webp",
+  "kemeja-tactical-custom-satuan-premium-03.webp",
+  "kemeja-tactical-custom-satuan-premium.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium.webp",
+  "kemeja-uniform-tactical-custom-satuan-premium-03.webp",
+  "pengiriman-kemeja-seragam-seluruh-indonesia.webp",
+  "vendor-kemeja-uniform-kain-super-premium.webp",
+  "wearpack-kemeja-lapangan-custom-gratis-desain.webp",
+];
+
+const row2 = [
+  "kemeja-tactical-custom-satuan-uniform-premium-01.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-02.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-03.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-04.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-05.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-06.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-07.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-08.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-09.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-11.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-12.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-13.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-14.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-15.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-16.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-17.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-18.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-19.webp",
+  "kemeja-tactical-custom-satuan-uniform-premium-20.webp",
+];
+---
+
+<section class="gallery-section" id="galeri">
+  <div class="gallery-header">
+    <p class="gallery-eyebrow">GALERI PRODUK</p>
+    <h2 class="gallery-headline">
+      Hasil Karya <span class="text-gradient">Bradwear</span>
+    </h2>
+  </div>
+
+  {/* Row 1 — Right to Left */}
+  <div class="gallery-row-wrapper">
+    <div class="gallery-fade gallery-fade-left"></div>
+    <div class="gallery-fade gallery-fade-right"></div>
+    <div class="gallery-track gallery-track-rtl">
+      {
+        [...row1, ...row1, ...row1].map((img, i) => (
+          <div class="gallery-item">
+            <img
+              src={`/gallery-products/01/${img}`}
+              alt={`Produk Bradwear ${i + 1}`}
+              loading="lazy"
+              decoding="async"
+              width="288"
+              height="384"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  {/* Row 2 — Left to Right */}
+  <div class="gallery-row-wrapper">
+    <div class="gallery-fade gallery-fade-left"></div>
+    <div class="gallery-fade gallery-fade-right"></div>
+    <div class="gallery-track gallery-track-ltr">
+      {
+        [...row2, ...row2, ...row2].map((img, i) => (
+          <div class="gallery-item">
+            <img
+              src={`/gallery-products/02/${img}`}
+              alt={`Produk Bradwear ${i + 1}`}
+              loading="lazy"
+              decoding="async"
+              width="288"
+              height="384"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ==================================================================
+     SECTION
+     ================================================================== */
+  .gallery-section {
+    position: relative;
+    z-index: 10;
+    padding: 4rem 0 5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+  }
+  @media (min-width: 1024px) {
+    .gallery-section {
+      padding: 6rem 0 7rem;
+    }
+  }
+
+  /* ==================================================================
+     HEADER
+     ================================================================== */
+  .gallery-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  @media (min-width: 1024px) {
+    .gallery-header {
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  .gallery-eyebrow {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    opacity: 0.7;
+    margin-bottom: 0.75rem;
+  }
+  @media (min-width: 1024px) {
+    .gallery-eyebrow {
+      font-size: 0.7rem;
+    }
+  }
+
+  .gallery-headline {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 640px) {
+    .gallery-headline {
+      font-size: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .gallery-headline {
+      font-size: 2.5rem;
+    }
+  }
+
+  /* ==================================================================
+     ROW WRAPPER
+     ================================================================== */
+  .gallery-row-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  .gallery-row-wrapper + .gallery-row-wrapper {
+    margin-top: 0;
+  }
+
+  /* Edge fades */
+  .gallery-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2rem;
+    z-index: 2;
+    pointer-events: none;
+  }
+  @media (min-width: 1024px) {
+    .gallery-fade {
+      width: 6rem;
+    }
+  }
+  .gallery-fade-left {
+    left: 0;
+    background: linear-gradient(to right, rgb(10, 10, 10) 0%, transparent 100%);
+  }
+  .gallery-fade-right {
+    right: 0;
+    background: linear-gradient(to left, rgb(10, 10, 10) 0%, transparent 100%);
+  }
+
+  /* ==================================================================
+     TRACK — Infinite Scroll
+     ================================================================== */
+  .gallery-track {
+    display: flex;
+    width: max-content;
+    gap: 0;
+  }
+
+  /* Row 1: Right to Left */
+  .gallery-track-rtl {
+    animation: gallery-scroll-rtl 60s linear infinite;
+  }
+  .gallery-row-wrapper:hover .gallery-track-rtl {
+    animation-play-state: paused;
+  }
+
+  /* Row 2: Left to Right */
+  .gallery-track-ltr {
+    animation: gallery-scroll-ltr 70s linear infinite;
+  }
+  .gallery-row-wrapper:hover .gallery-track-ltr {
+    animation-play-state: paused;
+  }
+
+  @keyframes gallery-scroll-rtl {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-33.333333%);
+    }
+  }
+
+  @keyframes gallery-scroll-ltr {
+    0% {
+      transform: translateX(-33.333333%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* ==================================================================
+     ITEMS — No gap, flush edges
+     ================================================================== */
+  .gallery-item {
+    flex-shrink: 0;
+    width: 10rem;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    position: relative;
+  }
+  @media (min-width: 640px) {
+    .gallery-item {
+      width: 14rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .gallery-item {
+      width: 18rem;
+    }
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+  }
+  .gallery-item:hover img {
+    transform: scale(1.08);
+  }
+</style>

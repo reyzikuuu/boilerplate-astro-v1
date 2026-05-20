@@ -1,0 +1,193 @@
+---
+// =============================================================================
+// HEADER
+// =============================================================================
+---
+
+<header id="site-header" class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[90%] lg:max-w-[73%] z-50 transition-transform duration-500 ease-in-out">
+  <nav class="relative h-14 md:h-16 flex items-center px-5 md:px-8 rounded-[16px]">
+    
+    {/* Glassmorphism Background Layer */}
+    <div class="absolute inset-0 bg-white/4 backdrop-blur-xl rounded-[16px]"></div>
+    
+    {/* 1px Custom Gradient Stroke (Outline) */}
+    <div class="nav-stroke-border absolute inset-0 rounded-[16px] pointer-events-none p-px"></div>
+    
+    {/* Inner Nav Content */}
+    <div class="relative z-10 flex items-center justify-between w-full">
+      
+      {/* Kiri: Logo */}
+      <a href="/" class="shrink-0 flex items-center">
+        <img src="/logo-light.webp" alt="Bradwear" class="h-5 md:h-6 w-auto" />
+      </a>
+
+      {/* Kanan: Menu & CTA */}
+      <div class="flex items-center gap-6 lg:gap-8">
+        
+        {/* Desktop Menu (Rata Kanan) */}
+        <div class="hidden md:flex gap-6 text-gray-300 text-sm font-medium">
+          <a href="#beranda" class="hover:text-white transition-colors">Beranda</a>
+          <a href="/katalog" class="hover:text-white transition-colors">Katalog</a>
+          <a href="#tentang" class="hover:text-white transition-colors">Tentang</a>
+        </div>
+
+        {/* CTA / Action */}
+        <div class="hidden md:flex">
+          <a href="#wa" class="relative overflow-hidden flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white px-5 py-2.5 rounded-full hover:scale-105 transition-transform duration-300" style="background-color: var(--color-whatsapp); box-shadow: 0 0 15px rgba(37,211,102,0.4);">
+            <img src="/whatsapp-icon.webp" alt="WhatsApp" class="w-[18px] h-[18px] object-contain" />
+            <span>Pesan</span>
+            
+            {/* Shimmer / Shine Effect */}
+            <div class="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-linear-to-r from-transparent via-white/40 to-transparent animate-shine"></div>
+          </a>
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <button id="mobile-menu-btn" class="md:hidden text-white p-2 focus:outline-none" aria-label="Toggle Menu">
+          {/* Hamburger Icon */}
+          <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          {/* Close (X) Icon */}
+          <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden transition-transform duration-300 rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  {/* Mobile Menu Dropdown (Hidden by default) */}
+  <div id="mobile-menu" class="absolute top-[calc(100%+0.5rem)] left-0 w-full hidden flex-col p-6 rounded-[16px] transition-all duration-300 opacity-0 -translate-y-4 shadow-2xl">
+    {/* Glassmorphism Background Layer (Lebih gelap agar menu terbaca di mobile) */}
+    <div class="absolute inset-0 bg-neutral-900/80 backdrop-blur-2xl rounded-[16px]"></div>
+    
+    {/* 1px Custom Gradient Stroke (Outline) */}
+    <div class="nav-stroke-border absolute inset-0 rounded-[16px] pointer-events-none p-px"></div>
+    
+    <div class="relative z-10 flex flex-col gap-6 text-center">
+      <a href="#beranda" class="text-gray-300 hover:text-white text-lg font-medium transition-colors">Beranda</a>
+      <a href="/katalog" class="text-gray-300 hover:text-white text-lg font-medium transition-colors">Katalog</a>
+      <a href="#tentang" class="text-gray-300 hover:text-white text-lg font-medium transition-colors">Tentang</a>
+      
+      {/* Mobile CTA */}
+      <a href="#wa" class="relative overflow-hidden flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider text-white px-5 py-3 mt-4 rounded-full" style="background-color: var(--color-whatsapp); box-shadow: 0 0 15px rgba(37,211,102,0.4);">
+        <img src="/whatsapp-icon.webp" alt="WhatsApp" class="w-5 h-5 object-contain" />
+        <span>Konsultasi Gratis!</span>
+        
+        {/* Shimmer / Shine Effect */}
+        <div class="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-linear-to-r from-transparent via-white/40 to-transparent animate-shine"></div>
+      </a>
+    </div>
+  </div>
+</header>
+<script>
+  // Mobile Menu Logic
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+    
+    if (btn && menu && iconOpen && iconClose) {
+      // Fungsi untuk menutup menu
+      const closeMenu = () => {
+        if (menu.classList.contains('hidden')) return;
+        
+        menu.classList.remove('opacity-100', 'translate-y-0');
+        menu.classList.add('opacity-0', '-translate-y-4');
+        
+        iconClose.classList.add('hidden', 'rotate-90');
+        iconClose.classList.remove('rotate-0');
+        iconOpen.classList.remove('hidden');
+        
+        // Wait for CSS transition to finish before hiding display
+        setTimeout(() => {
+          menu.classList.add('hidden');
+        }, 300);
+      };
+
+      // Event klik tombol hamburger
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Mencegah event klik bocor ke document
+        
+        const isHidden = menu.classList.contains('hidden');
+        
+        if (isHidden) {
+          // Open menu
+          menu.classList.remove('hidden');
+          iconOpen.classList.add('hidden');
+          iconOpen.classList.remove('rotate-0');
+          iconClose.classList.remove('hidden', 'rotate-90');
+          iconClose.classList.add('rotate-0');
+          
+          // Trigger animation
+          setTimeout(() => {
+            menu.classList.remove('opacity-0', '-translate-y-4');
+            menu.classList.add('opacity-100', 'translate-y-0');
+          }, 10);
+        } else {
+          closeMenu();
+        }
+      });
+
+      // Event klik di luar menu (Click Outside)
+      document.addEventListener('click', (e) => {
+        // Jika menu sedang terbuka, dan area yang diklik bukan bagian dari menu atau tombol
+        if (!menu.classList.contains('hidden') && e.target instanceof Node) {
+          if (!menu.contains(e.target) && !btn.contains(e.target)) {
+            closeMenu();
+          }
+        }
+      });
+    }
+
+    // --- Navbar Scroll Logic ---
+    const header = document.getElementById('site-header');
+    let isScrolling = 0;
+
+    if (header) {
+      window.addEventListener('scroll', () => {
+        // Hanya sembunyikan navbar jika pengguna sudah scroll ke bawah (melewati top-0)
+        if (window.scrollY > 50) {
+          // Slide Up (menghilang dengan menambahkan class utilitas)
+          header.classList.add('-translate-y-[150%]');
+        }
+
+        // Hapus timeout yang lama
+        window.clearTimeout(isScrolling);
+
+        // Mulai timer baru. Jika tidak ada scroll selama 200ms, berarti berhenti
+        isScrolling = window.setTimeout(() => {
+          // Slide Down (muncul kembali dengan menghapus class utilitas)
+          header.classList.remove('-translate-y-[150%]');
+        }, 200); 
+      }, { passive: true });
+    }
+  });
+</script>
+
+<style>
+  /* ============================================================================
+     NAV STROKE BORDER — 1px gradient outline, responsive color
+     Mobile  (<768px) : slate-400 (#94a3b8) — lebih terang, kontras di atas bg image
+     Desktop (≥768px) : slate-700 (#334155) — lebih subtle, elegan di dark background
+     ============================================================================ */
+  .nav-stroke-border {
+    /* Mobile default: slate-400 */
+    background: linear-gradient(to right, transparent, #94a3b8, transparent);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  @media (min-width: 768px) {
+    .nav-stroke-border {
+      /* Desktop: slate-700 */
+      background: linear-gradient(to right, transparent, #334155, transparent);
+    }
+  }
+</style>

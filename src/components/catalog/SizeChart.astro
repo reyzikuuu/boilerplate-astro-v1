@@ -1,0 +1,221 @@
+---
+// =============================================================================
+// SIZE CHART — Tabel Ukuran + Gambar Size Chart
+// =============================================================================
+import type { SizeData } from '@data/products';
+
+interface Props {
+  sizes: SizeData[];
+  sizeChartImage: string;
+  productName: string;
+}
+
+const { sizes, sizeChartImage, productName } = Astro.props;
+---
+
+<div class="sizechart-section">
+  <!-- Header -->
+  <div class="sizechart-header">
+    <svg class="sizechart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+    </svg>
+    <h2 class="sizechart-title">Size Chart</h2>
+  </div>
+
+  <!-- Tabel Ukuran -->
+  <div class="sizechart-table-wrapper">
+    <table class="sizechart-table">
+      <thead>
+        <tr>
+          <th>Ukuran</th>
+          <th>Lebar Dada</th>
+          <th>Panjang Badan</th>
+          <th>Panjang Lengan</th>
+        </tr>
+      </thead>
+      <tbody>
+        {sizes.map((row, i) => (
+          <tr class={i % 2 === 0 ? 'row-even' : 'row-odd'}>
+            <td class="size-label">{row.size}</td>
+            <td>{row.chest} cm</td>
+            <td>{row.length} cm</td>
+            <td>{row.sleeve} cm</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Gambar Size Chart -->
+  <div class="sizechart-image-wrapper">
+    <img
+      src={sizeChartImage}
+      alt={`Size chart ${productName}`}
+      loading="lazy"
+      decoding="async"
+      width="800"
+      height="500"
+      class="sizechart-image"
+    />
+  </div>
+
+  <!-- Tooltip / Bantuan -->
+  <div class="sizechart-help">
+    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+    </svg>
+    <p>Bingung pilih ukuran? <strong>Tanya kami!</strong> Tim Bradwear siap bantu Anda menemukan ukuran yang tepat.</p>
+  </div>
+</div>
+
+<style>
+  /* ================================================================
+     HEADER
+     ================================================================ */
+  .sizechart-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .sizechart-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .sizechart-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  @media (min-width: 1024px) {
+    .sizechart-title {
+      font-size: 1.15rem;
+    }
+  }
+
+  /* ================================================================
+     TABLE
+     ================================================================ */
+  .sizechart-table-wrapper {
+    overflow-x: auto;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 1.25rem;
+  }
+
+  .sizechart-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+  @media (min-width: 1024px) {
+    .sizechart-table {
+      font-size: 0.82rem;
+    }
+  }
+
+  .sizechart-table thead {
+    background: rgba(245, 158, 11, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .sizechart-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: var(--color-gold);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  @media (min-width: 1024px) {
+    .sizechart-table th {
+      font-size: 0.72rem;
+      padding: 0.85rem 1.25rem;
+    }
+  }
+
+  .sizechart-table td {
+    padding: 0.65rem 1rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  @media (min-width: 1024px) {
+    .sizechart-table td {
+      padding: 0.75rem 1.25rem;
+    }
+  }
+
+  .size-label {
+    font-weight: 700;
+    color: #fff !important;
+  }
+
+  .row-even {
+    background: rgba(255, 255, 255, 0.015);
+  }
+  .row-odd {
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .sizechart-table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.2s ease;
+  }
+  .sizechart-table tbody tr:hover {
+    background: rgba(245, 158, 11, 0.04);
+  }
+  .sizechart-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  /* ================================================================
+     SIZE CHART IMAGE
+     ================================================================ */
+  .sizechart-image-wrapper {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #111;
+    margin-bottom: 1rem;
+  }
+
+  .sizechart-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ================================================================
+     HELP / TOOLTIP
+     ================================================================ */
+  .sizechart-help {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.65rem;
+    background: rgba(120, 119, 198, 0.06);
+    border: 1px solid rgba(120, 119, 198, 0.12);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+  .sizechart-help svg {
+    color: var(--color-primary-light);
+    margin-top: 0.05rem;
+  }
+  .sizechart-help strong {
+    color: var(--color-primary-light);
+  }
+  @media (min-width: 1024px) {
+    .sizechart-help {
+      font-size: 0.78rem;
+    }
+  }
+</style>

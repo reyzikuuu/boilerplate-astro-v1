@@ -1,0 +1,322 @@
+/* ============================================================================
+ * GLOBAL STYLESHEET — DESIGN SYSTEM (Dark Premium + Light/Dark Mode)
+ * ============================================================================
+ * File ini adalah pusat design system website.
+ * 
+ * FITUR:
+ * - Dark/Light mode toggle (class-based: html.dark)
+ * - Premium color palette dengan gold accent
+ * - OKLCH color space untuk warna yang lebih natural
+ * - Responsive typography
+ * - Custom animations & transitions
+ *
+ * CARA KERJA DARK MODE:
+ * - Default: Dark mode (premium feel untuk fashion brand)
+ * - Toggle: Tambah/hapus class "dark" di <html>
+ * - CSS menggunakan :root (light) dan .dark (dark) untuk switch warna
+ * ============================================================================ */
+
+/* --- Import Google Fonts (HARUS di atas @import tailwindcss!) --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* --- Import Tailwind CSS v4 --- */
+@import "tailwindcss";
+
+/* ============================================================================
+ * DESIGN TOKENS (@theme) — Tailwind Utilities
+ * ============================================================================
+ * Token ini jadi utility class Tailwind: bg-primary, text-gold, dll
+ * ============================================================================ */
+@theme {
+  /* --------------------------------------------------------------------------
+   * BRAND COLORS — Premium palette
+   * -------------------------------------------------------------------------- */
+  --color-primary: oklch(0.55 0.25 264);
+  --color-primary-light: oklch(0.65 0.20 264);
+  --color-primary-dark: oklch(0.45 0.28 264);
+  --color-primary-foreground: oklch(0.98 0.01 264);
+
+  /* Gold accent — luxury fashion feel */
+  --color-gold: oklch(0.78 0.12 80);
+  --color-gold-light: oklch(0.85 0.10 80);
+  --color-gold-dark: oklch(0.65 0.14 80);
+
+  /* Secondary */
+  --color-secondary: oklch(0.70 0.15 180);
+  --color-secondary-light: oklch(0.80 0.12 180);
+  --color-secondary-dark: oklch(0.55 0.18 180);
+  --color-secondary-foreground: oklch(0.98 0.01 180);
+
+  /* Status colors */
+  --color-success: oklch(0.65 0.20 145);
+  --color-warning: oklch(0.75 0.18 70);
+  --color-error: oklch(0.55 0.25 25);
+
+  /* WhatsApp green */
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #20BD5A;
+
+  /* --------------------------------------------------------------------------
+   * TYPOGRAPHY
+   * -------------------------------------------------------------------------- */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: clamp(2.5rem, 5vw, 3rem);
+  --text-6xl: clamp(3rem, 6vw, 3.75rem);
+  --text-7xl: clamp(3.5rem, 8vw, 4.5rem);
+
+  /* --------------------------------------------------------------------------
+   * BORDER RADIUS
+   * -------------------------------------------------------------------------- */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* --------------------------------------------------------------------------
+   * SHADOWS (untuk light mode, dark mode pakai glow)
+   * -------------------------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px 0 oklch(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.07), 0 2px 4px -2px oklch(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.08), 0 4px 6px -4px oklch(0 0 0 / 0.04);
+  --shadow-xl: 0 20px 25px -5px oklch(0 0 0 / 0.10), 0 8px 10px -6px oklch(0 0 0 / 0.04);
+  --shadow-glow: 0 0 20px oklch(0.55 0.25 264 / 0.3);
+  --shadow-gold-glow: 0 0 25px oklch(0.78 0.12 80 / 0.25);
+
+  /* --------------------------------------------------------------------------
+   * ANIMATIONS
+   * -------------------------------------------------------------------------- */
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-slide-up: slide-up 0.6s ease-out forwards;
+  --animate-slide-down: slide-down 0.4s ease-out forwards;
+  --animate-scale-in: scale-in 0.3s ease-out forwards;
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+/* ============================================================================
+ * DARK/LIGHT MODE — CSS Custom Properties
+ * ============================================================================
+ * Warna-warna yang berubah berdasarkan mode.
+ * Menggunakan CSS custom properties (bukan @theme) agar bisa di-toggle.
+ *
+ * CARA KERJA:
+ * - :root = Light mode values
+ * - .dark = Dark mode values (override :root)
+ * - Komponen menggunakan var(--bg), var(--text), dll
+ * ============================================================================ */
+
+/* --- LIGHT MODE (default) --- */
+:root {
+  /* Background layers */
+  --bg: #FAFAFA;                        /* Background utama */
+  --bg-secondary: #F0F0F0;             /* Background card/section alt */
+  --bg-elevated: #FFFFFF;              /* Card, modal, dropdown */
+  --bg-nav: rgba(255, 255, 255, 0.85); /* Navbar background (dengan blur) */
+
+  /* Text colors */
+  --text-primary: #0A0A0A;             /* Heading, teks utama */
+  --text-secondary: #525252;           /* Teks pendukung, deskripsi */
+  --text-muted: #9CA3AF;              /* Teks yang kurang penting */
+  --text-inverse: #FAFAFA;            /* Teks di atas background gelap */
+
+  /* Border & dividers */
+  --border: rgba(0, 0, 0, 0.08);       /* Border halus */
+  --border-strong: rgba(0, 0, 0, 0.15);/* Border lebih jelas */
+
+  /* Navbar specific */
+  --nav-link: #525252;                 /* Warna link navbar */
+  --nav-link-hover: #0A0A0A;          /* Warna link saat hover */
+  --nav-link-active: oklch(0.55 0.25 264); /* Warna link aktif */
+
+  /* Transition for smooth mode switching */
+  color-scheme: light;
+}
+
+/* --- DARK MODE (premium) --- */
+.dark {
+  /* Background layers — gelap bertingkat untuk depth */
+  --bg: #0A0A0A;                        /* Background utama (hampir hitam) */
+  --bg-secondary: #141414;             /* Sedikit lebih terang */
+  --bg-elevated: #1A1A1A;              /* Card, modal */
+  --bg-nav: rgba(10, 10, 10, 0.80);   /* Navbar (dengan blur) */
+
+  /* Text colors */
+  --text-primary: #F5F5F5;             /* Teks utama (soft white) */
+  --text-secondary: #A3A3A3;           /* Teks pendukung */
+  --text-muted: #636363;              /* Teks kurang penting */
+  --text-inverse: #0A0A0A;
+
+  /* Border */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+
+  /* Navbar */
+  --nav-link: #A3A3A3;
+  --nav-link-hover: #F5F5F5;
+  --nav-link-active: oklch(0.78 0.12 80); /* Gold di dark mode */
+
+  color-scheme: dark;
+}
+
+/* ============================================================================
+ * KEYFRAMES
+ * ============================================================================ */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Shimmer animation untuk logo/brand */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ============================================================================
+ * BASE STYLES
+ * ============================================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scrollbar-gutter: stable;
+    /* Fallback background — ditimpa oleh fixed layer jika ada */
+    background-color: var(--bg);
+    transition: background-color 0.4s ease;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    /* background dihandle oleh fixed layer di index.astro */
+    background-color: transparent;
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+    transition: color 0.4s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background-color: oklch(0.78 0.12 80 / 0.3);
+    color: var(--text-primary);
+  }
+}
+
+/* ============================================================================
+ * UTILITY CLASSES
+ * ============================================================================ */
+@layer utilities {
+  /* Container halaman */
+  .container-page {
+    width: 100%;
+    max-width: 73%;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  @media (max-width: 1023px) {
+    .container-page {
+      max-width: 100%;
+    }
+  }
+
+  /* Text gradient — gold premium */
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-gold), var(--color-gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Text gradient animasi shimmer */
+  .text-shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-gold-dark) 0%,
+      var(--color-gold-light) 25%,
+      var(--color-gold) 50%,
+      var(--color-gold-light) 75%,
+      var(--color-gold-dark) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+  }
+
+  /* Glass effect — menyesuaikan mode */
+  .glass {
+    background: var(--bg-nav);
+    backdrop-filter: blur(20px) saturate(1.8);
+    -webkit-backdrop-filter: blur(20px) saturate(1.8);
+    border: 1px solid var(--border);
+  }
+}
+
+/* ============================================================================
+ * GLOBAL ANIMATIONS
+ * ============================================================================ */
+
+/* Shine / shimmer sweep — used by navbar & hero CTA buttons */
+@keyframes shine {
+  0%   { transform: translateX(-200%) skewX(-15deg); }
+  40%  { transform: translateX(300%)  skewX(-15deg); }
+  100% { transform: translateX(300%)  skewX(-15deg); }
+}
+.animate-shine {
+  animation: shine 3s infinite;
+}

@@ -1,0 +1,158 @@
+---
+// =============================================================================
+// BASE LAYOUT — Layout Induk Semua Halaman
+// =============================================================================
+// Layout ini membungkus SEMUA halaman website.
+// Berisi: <html>, <head>, <body>, dan semua komponen global.
+//
+// CARA PAKAI (di pages/*.astro):
+// ---
+// import BaseLayout from '@layouts/BaseLayout.astro';
+// ---
+// <BaseLayout title="Nama Halaman" description="Deskripsi">
+//   <h1>Konten halaman di sini...</h1>
+// </BaseLayout>
+//
+// STRUKTUR HTML:
+// <html>
+//   <head> → BaseHead (SEO) + MetaPixel + SchemaMarkup
+//   <body>
+//     <a class="skip-link"> → Accessibility skip link
+//     <Header />
+//     <main> → SLOT (konten halaman) </main>
+//     <Footer />
+//   </body>
+// </html>
+// =============================================================================
+
+// --- Import komponen global ---
+import BaseHead from '@components/seo/BaseHead.astro';
+import SchemaMarkup from '@components/seo/SchemaMarkup.astro';
+import MetaPixel from '@components/seo/MetaPixel.astro';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+
+// --- Import CSS global (design system + Tailwind) ---
+import '@styles/global.css';
+
+// --- Props yang bisa diatur per halaman ---
+interface Props {
+  /** Judul halaman (wajib) */
+  title: string;
+  /** Deskripsi untuk SEO */
+  description?: string;
+  /** Gambar untuk social sharing */
+  ogImage?: string;
+  /** Tipe schema (untuk structured data) */
+  schemaType?: 'website' | 'organization' | 'landing-page';
+  /** Apakah halaman tidak boleh di-index Google? */
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage,
+  schemaType = 'website',
+  noIndex = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="id" class="scroll-smooth dark">
+  <head>
+    {/* ================================================================
+        THEME INIT — Inline script WAJIB di paling atas <head>
+        ================================================================
+        Script ini berjalan SEBELUM browser render apapun.
+        Mencegah "flash" putih saat load (FOUC).
+        ================================================================ */}
+    <script is:inline>
+      (function() {
+        const t = localStorage.getItem('theme');
+        if (t === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+
+    {/* ================================================================
+        HEAD — SEO Meta Tags + Tracking Scripts
+        ================================================================ */}
+
+    {/* Komponen SEO — title, description, OG tags, canonical, dll */}
+    <BaseHead
+      title={title}
+      description={description}
+      ogImage={ogImage}
+      noIndex={noIndex}
+    />
+
+    {/* Structured Data — JSON-LD untuk Google Rich Results */}
+    <SchemaMarkup type={schemaType} pageName={title} />
+    {schemaType !== 'organization' && <SchemaMarkup type="organization" />}
+
+    {/* Meta Pixel & Conversion API — tracking untuk Meta Ads */}
+    <MetaPixel />
+  </head>
+
+  <body class="min-h-screen flex flex-col antialiased" style="color: var(--text-primary);">
+    {/* ================================================================
+        SKIP LINK — Accessibility
+        ================================================================
+        Link tersembunyi yang muncul saat user tekan Tab.
+        Memungkinkan keyboard user langsung skip ke konten utama
+        tanpa harus tab melalui semua link di header.
+        ================================================================ */}
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded-md focus:text-sm focus:font-medium"
+    >
+      Skip to main content
+    </a>
+
+    {/* Header / Navigation */}
+    <Header />
+
+    {/* ================================================================
+        MAIN CONTENT — Konten halaman di-inject di sini via <slot />
+        ================================================================
+        <slot /> = placeholder yang akan diisi oleh konten halaman.
+        
+        Contoh: Jika di index.astro kamu tulis:
+        <BaseLayout title="Home">
+          <h1>Hello</h1>
+        </BaseLayout>
+        
+        Maka <h1>Hello</h1> akan muncul di posisi <slot />
+        ================================================================ */}
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+
+    {/* Footer */}
+    <Footer />
+
+    {/* ================================================================
+        VIEWCONTENT AUTO-TRACK
+        ================================================================
+        Track event ViewContent secara otomatis saat halaman dimuat.
+        Ini penting untuk Meta Ads — Meta butuh tahu halaman mana
+        yang dilihat pengunjung dari iklan.
+        ================================================================ */}
+    <script>
+      // Tunggu halaman selesai load, lalu track ViewContent
+      document.addEventListener('DOMContentLoaded', () => {
+        // Pastikan fungsi trackMetaEvent tersedia
+        if (typeof window.trackMetaEvent === 'function') {
+          window.trackMetaEvent('ViewContent', {
+            content_name: document.title,
+            content_category: 'Landing Page',
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

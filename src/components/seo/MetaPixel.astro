@@ -1,0 +1,186 @@
+---
+// =============================================================================
+// META PIXEL — Facebook/Meta Pixel + Conversion API (Client-Side)
+// =============================================================================
+// Komponen ini menangani:
+// 1. Meta Pixel (browser-side tracking) — fbq()
+// 2. Client-side helper untuk mengirim event ke Conversion API (server-side)
+//
+// CARA KERJA DEDUPLICATION:
+// Setiap event dikirim dari DUA sumber:
+// - Browser (Meta Pixel / fbq) → langsung ke Meta
+// - Server (Conversion API) → melalui endpoint /api/meta-capi
+//
+// Kedua event HARUS memiliki event_id yang SAMA agar Meta bisa
+// deduplikasi (menghitung sebagai 1 event, bukan 2).
+//
+// EVENTS YANG DI-TRACK:
+// - PageView: Otomatis saat halaman dimuat
+// - ViewContent: Otomatis saat halaman landing page dimuat
+// - Lead: Saat user klik tombol WhatsApp (CTA)
+//
+// CARA PAKAI:
+// 1. Tambahkan komponen ini di BaseLayout.astro
+// 2. Panggil window.trackMetaEvent('Lead') dari CTA button
+// =============================================================================
+
+import { siteConfig } from '@data/siteConfig';
+
+// Ambil Pixel ID dari config (yang ambil dari env variable)
+const pixelId = siteConfig.metaPixelId;
+---
+
+{/* Hanya render jika Pixel ID tersedia */}
+{pixelId && (
+  <Fragment>
+    {/* ====================================================================
+        META PIXEL BASE CODE
+        ====================================================================
+        Script ini di-load langsung (bukan via Partytown) karena Meta Pixel
+        butuh cookie browser (fbp, fbc) untuk tracking yang akurat.
+        
+        Script ini:
+        1. Load library fbevents.js dari Meta
+        2. Inisialisasi Pixel dengan ID kamu
+        3. Auto-track PageView
+        ==================================================================== */}
+    <script id="meta-pixel-base" define:vars={{ pixelId }}>
+      // --- Meta Pixel Base Code ---
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        'script',
+        'https://connect.facebook.net/en_US/fbevents.js'
+      );
+
+      // Inisialisasi Pixel — advanced matching diaktifkan
+      fbq('init', pixelId);
+      // Track PageView otomatis
+      fbq('track', 'PageView');
+    </script>
+
+    {/* Noscript fallback — untuk browser tanpa JavaScript */}
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display:none"
+        src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+        alt=""
+      />
+    </noscript>
+
+    {/* ====================================================================
+        TRACKING HELPER — Fungsi untuk track events dari CTA buttons
+        ====================================================================
+        Script ini membuat fungsi global:
+        - window.trackMetaEvent(eventName, eventData)
+        
+        Fungsi ini:
+        1. Generate event_id unik (untuk deduplication)
+        2. Kirim event ke Meta Pixel (browser-side)
+        3. Kirim event ke /api/meta-capi (server-side via Conversion API)
+        4. Meta akan deduplikasi berdasarkan event_id yang sama
+        ==================================================================== */}
+    <script id="meta-tracking-helper" define:vars={{ pixelId }}>
+      /**
+       * Generate UUID v4 — ID unik untuk setiap event
+       * Format: "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+       */
+      function generateEventId() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+          /[xy]/g,
+          function (c) {
+            const r = (Math.random() * 16) | 0;
+            const v = c === 'x' ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+          }
+        );
+      }
+
+      /**
+       * Ambil cookie value berdasarkan nama
+       * Dipakai untuk mengambil _fbp dan _fbc cookies
+       */
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+      }
+
+      /**
+       * trackMetaEvent — Fungsi utama untuk tracking Meta events
+       *
+       * @param {string} eventName - Nama event ('ViewContent', 'Lead', dll)
+       * @param {object} eventData - Data tambahan (content_name, value, dll)
+       *
+       * Contoh penggunaan di HTML:
+       * <button onclick="window.trackMetaEvent('Lead', { content_name: 'WhatsApp CTA' })">
+       *   Chat via WhatsApp
+       * </button>
+       */
+      window.trackMetaEvent = function (eventName, eventData = {}) {
+        // 1. Generate event_id unik — HARUS SAMA di Pixel dan CAPI
+        const eventId = generateEventId();
+
+        // 2. KIRIM KE META PIXEL (browser-side)
+        //    Parameter ke-4 {eventID} digunakan Meta untuk deduplication
+        if (typeof fbq !== 'undefined') {
+          fbq('track', eventName, eventData, { eventID: eventId });
+        }
+
+        // 3. KIRIM KE CONVERSION API (server-side)
+        //    Menggunakan endpoint /api/meta-capi yang kita buat di Astro
+        const capiPayload = {
+          eventName: eventName,
+          eventId: eventId,
+          eventData: eventData,
+          // User data dari browser — untuk Event Match Quality (EMQ)
+          sourceUrl: window.location.href,
+          userAgent: navigator.userAgent,
+          fbp: getCookie('_fbp') || null, // Facebook browser ID
+          fbc: getCookie('_fbc') || null, // Facebook click ID (dari URL ?fbclid=)
+        };
+
+        // Kirim ke server endpoint (non-blocking, pakai sendBeacon atau fetch)
+        if (navigator.sendBeacon) {
+          // sendBeacon: reliable bahkan saat user navigate away
+          navigator.sendBeacon(
+            '/api/meta-capi',
+            new Blob([JSON.stringify(capiPayload)], {
+              type: 'application/json',
+            })
+          );
+        } else {
+          // Fallback ke fetch
+          fetch('/api/meta-capi', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(capiPayload),
+            keepalive: true, // Tetap kirim meskipun halaman ditutup
+          }).catch(() => {
+            // Gagal kirim CAPI — tidak fatal, Pixel sudah track
+          });
+        }
+      };
+    </script>
+  </Fragment>
+)}

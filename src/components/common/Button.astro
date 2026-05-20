@@ -1,0 +1,126 @@
+---
+// =============================================================================
+// BUTTON COMPONENT — Tombol Reusable
+// =============================================================================
+// Komponen button yang bisa dipakai di mana saja.
+// Mendukung: link (<a>) dan button (<button>), berbagai variant & ukuran.
+//
+// CARA PAKAI:
+// <!-- Sebagai link -->
+// <Button href="/about" variant="primary" size="lg">Tentang Kami</Button>
+//
+// <!-- Sebagai button -->
+// <Button variant="secondary" size="md" id="cta-btn">Klik Saya</Button>
+//
+// <!-- WhatsApp CTA (paling penting untuk landing page!) -->
+// <Button href="https://wa.me/..." variant="whatsapp" size="lg">
+//   Chat via WhatsApp
+// </Button>
+// =============================================================================
+
+import { cn } from '@lib/utils';
+
+interface Props {
+  /** URL tujuan — jika ada, render sebagai <a> link */
+  href?: string;
+  /** Variant tampilan button */
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'whatsapp';
+  /** Ukuran button */
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** ID unik (untuk tracking & testing) */
+  id?: string;
+  /** Buka di tab baru? */
+  target?: string;
+  /** rel attribute (otomatis noopener untuk external links) */
+  rel?: string;
+  /** Class CSS tambahan */
+  class?: string;
+  /** Disable button */
+  disabled?: boolean;
+  /** Aria label (untuk accessibility) */
+  'aria-label'?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  id,
+  target,
+  rel,
+  class: className,
+  disabled = false,
+  'aria-label': ariaLabel,
+  ...rest
+} = Astro.props;
+
+// --- Style classes berdasarkan variant ---
+const variantClasses: Record<string, string> = {
+  primary:
+    'bg-primary text-primary-foreground hover:bg-primary-dark shadow-md hover:shadow-lg hover:shadow-glow',
+  secondary:
+    'bg-secondary text-secondary-foreground hover:bg-secondary-dark shadow-md hover:shadow-lg',
+  outline:
+    'border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground',
+  ghost:
+    'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900',
+  whatsapp:
+    'bg-[#25D366] text-white hover:bg-[#20BD5A] shadow-md hover:shadow-lg hover:shadow-[0_0_20px_rgba(37,211,102,0.3)]',
+};
+
+// --- Style classes berdasarkan ukuran ---
+const sizeClasses: Record<string, string> = {
+  sm: 'px-4 py-2 text-sm gap-1.5',
+  md: 'px-6 py-2.5 text-base gap-2',
+  lg: 'px-8 py-3.5 text-lg gap-2.5',
+  xl: 'px-10 py-4 text-xl gap-3',
+};
+
+// --- Gabungkan semua classes ---
+const buttonClasses = cn(
+  // Base styles (selalu ada)
+  'inline-flex items-center justify-center font-semibold rounded-lg',
+  'transition-all duration-300 ease-out',
+  'focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+  'active:scale-[0.97]', // Efek "pressed" saat klik
+  'cursor-pointer',
+  // Variant & size
+  variantClasses[variant],
+  sizeClasses[size],
+  // Disabled state
+  disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
+  // Custom class dari user
+  className,
+);
+
+// --- Pilih tag: <a> untuk link, <button> untuk aksi ---
+const Tag = href ? 'a' : 'button';
+
+// Auto-add rel="noopener noreferrer" untuk external links
+const computedRel = target === '_blank' ? (rel || 'noopener noreferrer') : rel;
+---
+
+{/* Render sebagai <a> atau <button> sesuai props */}
+{href ? (
+  <a
+    href={href}
+    id={id}
+    target={target}
+    rel={computedRel}
+    class={buttonClasses}
+    aria-label={ariaLabel}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    id={id}
+    class={buttonClasses}
+    disabled={disabled}
+    aria-label={ariaLabel}
+    {...rest}
+  >
+    <slot />
+  </button>
+)}

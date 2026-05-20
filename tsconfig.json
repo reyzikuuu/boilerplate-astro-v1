@@ -1,0 +1,31 @@
+{
+  // ==========================================================================
+  // TYPESCRIPT CONFIGURATION
+  // ==========================================================================
+  // Menggunakan strict mode bawaan Astro untuk type safety maksimal.
+  // Path aliases memudahkan import tanpa '../../../' yang panjang.
+  //
+  // Contoh: import Button from '@components/common/Button.astro'
+  //         (bukan import Button from '../../../components/common/Button.astro')
+  // ==========================================================================
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    // ----------------------------------------------------------------------
+    // PATH ALIASES
+    // ----------------------------------------------------------------------
+    // Shortcut untuk import file. '@' = src folder.
+    // Setelah tambah alias di sini, bisa langsung dipakai di file .astro/.ts
+    "baseUrl": ".",
+    "paths": {
+      // Contoh penggunaan: import X from '@components/...'
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@lib/*": ["src/lib/*"],
+      "@data/*": ["src/data/*"],
+      "@assets/*": ["src/assets/*"],
+      "@styles/*": ["src/styles/*"]
+    }
+  }
+}

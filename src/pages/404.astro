@@ -1,0 +1,50 @@
+---
+// =============================================================================
+// 404 PAGE — Halaman Tidak Ditemukan
+// =============================================================================
+// Halaman custom 404 yang branded dan helpful.
+// Menampilkan pesan error yang ramah dan link kembali ke homepage.
+//
+// Kenapa perlu custom 404?
+// - User experience lebih baik
+// - Menjaga branding tetap konsisten
+// - Memberikan jalan keluar (link ke homepage)
+// - SEO: noIndex agar Google tidak index halaman 404
+// =============================================================================
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/common/Button.astro';
+import { siteConfig } from '@data/siteConfig';
+
+// Prerender halaman 404
+export const prerender = true;
+---
+
+<BaseLayout
+  title="Halaman Tidak Ditemukan"
+  description="Halaman yang kamu cari tidak ditemukan."
+  noIndex={true}
+>
+  <section class="min-h-[70vh] flex items-center justify-center py-16">
+    <div class="container-page text-center">
+      {/* 404 Number */}
+      <div class="text-8xl md:text-9xl font-black text-gradient mb-6" aria-hidden="true">
+        404
+      </div>
+
+      {/* Error Message */}
+      <h1 class="text-2xl md:text-3xl font-bold text-neutral-900 mb-4">
+        Halaman Tidak Ditemukan
+      </h1>
+
+      <p class="text-lg text-neutral-600 mb-8 max-w-md mx-auto">
+        Maaf, halaman yang kamu cari tidak tersedia atau sudah dipindahkan.
+      </p>
+
+      {/* Back to Home */}
+      <Button href="/" variant="primary" size="lg">
+        ← Kembali ke Home
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

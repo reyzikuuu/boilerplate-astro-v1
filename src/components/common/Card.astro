@@ -1,0 +1,67 @@
+---
+// =============================================================================
+// CARD COMPONENT — Kartu Konten Reusable
+// =============================================================================
+// Komponen card untuk menampilkan produk, fitur, testimoni, dll.
+//
+// CARA PAKAI:
+// <Card>
+//   <h3>Judul Card</h3>
+//   <p>Deskripsi card...</p>
+// </Card>
+//
+// <Card variant="elevated" hoverable>
+//   <p>Card dengan hover effect</p>
+// </Card>
+// =============================================================================
+
+import { cn } from '@lib/utils';
+
+interface Props {
+  /** Variant tampilan card */
+  variant?: 'default' | 'outlined' | 'elevated' | 'glass';
+  /** Tambahkan hover effect? */
+  hoverable?: boolean;
+  /** Padding size */
+  padding?: 'sm' | 'md' | 'lg';
+  /** Class CSS tambahan */
+  class?: string;
+  /** ID unik */
+  id?: string;
+}
+
+const {
+  variant = 'default',
+  hoverable = false,
+  padding = 'md',
+  class: className,
+  id,
+} = Astro.props;
+
+// --- Variant styles ---
+const variantClasses: Record<string, string> = {
+  default: 'bg-surface-elevated border border-neutral-200',
+  outlined: 'border-2 border-neutral-200 bg-transparent',
+  elevated: 'bg-surface-elevated shadow-md',
+  glass: 'glass',
+};
+
+// --- Padding styles ---
+const paddingClasses: Record<string, string> = {
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8',
+};
+
+const cardClasses = cn(
+  'rounded-xl transition-all duration-300',
+  variantClasses[variant],
+  paddingClasses[padding],
+  hoverable && 'hover:shadow-xl hover:-translate-y-1 cursor-pointer',
+  className,
+);
+---
+
+<div id={id} class={cardClasses}>
+  <slot />
+</div>

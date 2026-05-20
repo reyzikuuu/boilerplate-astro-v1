@@ -1,0 +1,742 @@
+---
+// =============================================================================
+// HERO SECTION — Landing Page Utama Bradwear
+// =============================================================================
+// Section hero dengan layout split: Left (copy + CTA) | Right (image carousel)
+// - Rotating headlines (3 varian, bergantian otomatis)
+// - Feature badges dengan icon SVG
+// - CTA WhatsApp gradient + Lihat Testimoni outline
+// - Image carousel crossfade 4 gambar (2s stay per gambar)
+// =============================================================================
+
+import { getWhatsAppUrl } from "@data/siteConfig";
+---
+
+<section
+  id="hero"
+  class="relative min-h-screen flex items-center overflow-hidden pt-24 pb-12 lg:pt-28 lg:pb-16"
+>
+  {
+    /* ================================================================
+      HERO CONTENT — 70% container layout
+      ================================================================ */
+  }
+  {/* Mobile Hero Background */}
+  <div class="absolute inset-0 z-0 lg:hidden pointer-events-none">
+    <div class="relative w-full h-full">
+      <img
+        src="/mobile-hero/mobile-hero-1.webp"
+        class="mobile-bg-img mobile-bg-active absolute inset-0 w-full h-[75vh] object-cover object-top"
+        style="--bg-opacity: 0.5;"
+        alt="Mobile BG 1"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+        width="480"
+        height="800"
+      />
+      <img
+        src="/mobile-hero/mobile-hero-2.webp"
+        class="mobile-bg-img absolute inset-0 w-full h-[75vh] object-cover object-top"
+        style="--bg-opacity: 0.3;"
+        alt="Mobile BG 2"
+        loading="lazy"
+        decoding="async"
+        width="480"
+        height="800"
+      />
+      {/* Bottom fade to background color */}
+      <div
+        class="absolute inset-x-0 top-0 h-[75vh] bg-linear-to-b from-transparent via-transparent to-[#0a0a0a]"
+      >
+      </div>
+    </div>
+  </div>
+
+  <div class="container-page w-full relative z-10">
+    <div class="hero-grid">
+      {
+        /* ============================================================
+          LEFT HERO — Copy, Features, CTA
+          ============================================================ */
+      }
+      <div
+        class="hero-left flex flex-col justify-center text-center lg:text-left"
+      >
+        {/* Badge */}
+        <div
+          class="mb-2 lg:mb-5 animate-fade-in flex justify-center lg:justify-start w-full"
+        >
+          <span class="hero-badge">
+            <span class="relative flex h-3 w-3 mr-1">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"
+              ></span>
+            </span>
+            <span>PUSAT KONVEKSI KEMEJA CUSTOM</span>
+          </span>
+        </div>
+
+        {/* Rotating Headlines */}
+        <div class="headline-container mb-3 lg:mb-6 w-full" aria-live="polite">
+          <h1
+            class="w-full text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-[1.1] tracking-tight"
+          >
+            {/* Headline 1 (active by default) */}
+            <span class="headline-text headline-active" data-headline="0">
+              <span class="block">Bikin Seragam Kerja</span>
+              <span class="block text-gradient">Berkualitas</span>
+              <span class="block">Full Garansi</span>
+            </span>
+            {/* Headline 2 */}
+            <span class="headline-text" data-headline="1">
+              <span class="block">Bahan Premium</span>
+              <span class="block text-gradient">Tangguh di Lapangan</span>
+              <span class="block">Sejuk di Kantor</span>
+            </span>
+            {/* Headline 3 */}
+            <span class="headline-text" data-headline="2">
+              <span class="block">Kustom Bordir 3D</span>
+              <span class="block text-gradient">Presisi Tinggi</span>
+            </span>
+          </h1>
+        </div>
+
+        {/* Sub-headline */}
+        <p
+          class="w-full text-sm sm:text-base text-neutral-300 mb-6 animate-fade-in"
+          style="animation-delay: 0.15s;"
+        >
+          <strong class="text-gradient font-extrabold tracking-wider"
+            >BRADWEAR</strong
+          > vendor pusat konveksi yang siap bantu anda tampil kelas profesional dengan
+          berbagai macam material & harga terjangkau.
+        </p>
+
+        {/* Feature badges grid */}
+        <div
+          class="feature-grid mb-6 animate-fade-in w-full max-w-sm lg:max-w-none mx-auto lg:mx-0"
+          style="animation-delay: 0.2s;"
+        >
+          {/* Bisa satuan */}
+          <div class="feature-item">
+            <svg
+              class="feature-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+              ></path></svg
+            >
+            <span>Bisa satuan!</span>
+          </div>
+          {/* Beli banyak lebih murah */}
+          <div class="feature-item">
+            <svg
+              class="feature-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z"
+              ></path></svg
+            >
+            <span>Beli banyak, lebih murah!</span>
+          </div>
+          {/* Bordir 3D */}
+          <div class="feature-item">
+            <svg
+              class="feature-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
+              ></path></svg
+            >
+            <span>Bordir 3D Presisi tinggi</span>
+          </div>
+          {/* Bahan premium */}
+          <div class="feature-item">
+            <svg
+              class="feature-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+              ></path></svg
+            >
+            <span>Bahan premium adem nyaman</span>
+          </div>
+          {/* Free custom desain */}
+          <div class="feature-item">
+            <svg
+              class="feature-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+              ></path></svg
+            >
+            <span>Free custom desain</span>
+          </div>
+          {/* Produksi cepat */}
+          <div class="feature-item">
+            <svg
+              class="feature-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              ></path></svg
+            >
+            <span>Produksi 5-7 Hari Kerja</span>
+          </div>
+        </div>
+
+        {/* Italic note */}
+        <p
+          class="w-full text-xs sm:text-sm italic text-neutral-400 mb-6 animate-fade-in"
+          style="animation-delay: 0.3s;"
+        >
+          Produksi satuan terbatas tiap minggu, konsultasikan sekarang juga!
+        </p>
+
+        {/* CTA Buttons */}
+        <div
+          class="flex flex-col sm:flex-row items-center justify-center lg:justify-start w-full gap-3 animate-fade-in"
+          style="animation-delay: 0.4s;"
+        >
+          {/* WhatsApp CTA — gradient */}
+          <a
+            href={getWhatsAppUrl(
+              "Halo Bradwear, saya ingin konsultasi kemeja custom.",
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            id="hero-whatsapp-cta"
+            class="hero-cta-primary group"
+          >
+            {/* WhatsApp Icon */}
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+              ></path>
+            </svg>
+            <span>Konsultasi Gratis!</span>
+            {/* Shimmer overlay */}
+            <div
+              class="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-linear-to-r from-transparent via-white/25 to-transparent group-hover:animate-[shine_0.6s_ease-out]"
+            >
+            </div>
+          </a>
+
+          {/* Lihat Testimoni — outline */}
+          <a
+            href="#testimoni"
+            id="hero-testimoni-cta"
+            class="hero-cta-outline hidden! sm:inline-flex!"
+          >
+            {/* Star/Rate Icon */}
+            <svg
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
+              ></path>
+            </svg>
+            <span>Lihat Testimoni</span>
+          </a>
+        </div>
+      </div>
+
+      {
+        /* ============================================================
+          RIGHT HERO — Image Carousel (Crossfade)
+          ============================================================ */
+      }
+      <div class="hero-right flex items-center justify-center relative w-full">
+        <div class="hero-image-wrapper">
+          {/* Glassmorphism frame */}
+          <div class="hero-image-frame">
+            <img
+              src="/hero-desktop-01.webp"
+              alt="Kemeja custom Bradwear"
+              class="hero-carousel-img hero-img-active"
+              data-slide="0"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+              width="560"
+              height="700"
+            />
+            <img
+              src="/hero-desktop-02.webp"
+              alt="Seragam bordir 3D premium"
+              class="hero-carousel-img"
+              data-slide="1"
+              loading="lazy"
+              decoding="async"
+              width="560"
+              height="700"
+            />
+            <img
+              src="/hero-desktop-03.webp"
+              alt="Material premium Bradwear"
+              class="hero-carousel-img"
+              data-slide="2"
+              loading="lazy"
+              decoding="async"
+              width="560"
+              height="700"
+            />
+            <img
+              src="/hero-desktop-04.webp"
+              alt="Kemeja korporat custom"
+              class="hero-carousel-img"
+              data-slide="3"
+              loading="lazy"
+              decoding="async"
+              width="560"
+              height="700"
+            />
+          </div>
+          {/* Decorative glow behind image */}
+          <div class="hero-image-glow" aria-hidden="true"></div>
+          {/* Slide indicators */}
+          <div class="hero-indicators">
+            <button
+              class="hero-dot hero-dot-active"
+              data-dot="0"
+              aria-label="Slide 1"></button>
+            <button class="hero-dot" data-dot="1" aria-label="Slide 2"></button>
+            <button class="hero-dot" data-dot="2" aria-label="Slide 3"></button>
+            <button class="hero-dot" data-dot="3" aria-label="Slide 4"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{
+  /* ================================================================
+    SCRIPTS — Headline rotation + Image carousel
+    ================================================================ */
+}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // --- Headline Rotation ---
+    const headlines = document.querySelectorAll<HTMLElement>(".headline-text");
+    let currentHeadline = 0;
+    const headlineCount = headlines.length;
+    const HEADLINE_DURATION = 3500; // 3.5s per headline
+
+    function rotateHeadline() {
+      headlines[currentHeadline].classList.remove("headline-active");
+      currentHeadline = (currentHeadline + 1) % headlineCount;
+      headlines[currentHeadline].classList.add("headline-active");
+    }
+
+    if (headlineCount > 1) {
+      setInterval(rotateHeadline, HEADLINE_DURATION);
+    }
+
+    // --- Image Carousel Crossfade ---
+    const slides = document.querySelectorAll<HTMLElement>(".hero-carousel-img");
+    const dots = document.querySelectorAll<HTMLElement>(".hero-dot");
+    let currentSlide = 0;
+    const slideCount = slides.length;
+    const SLIDE_DURATION = 2000; // 2s stay per image
+    const TRANSITION_MS = 800; // crossfade duration
+
+    function goToSlide(index: number) {
+      slides[currentSlide].classList.remove("hero-img-active");
+      dots[currentSlide]?.classList.remove("hero-dot-active");
+      currentSlide = index;
+      slides[currentSlide].classList.add("hero-img-active");
+      dots[currentSlide]?.classList.add("hero-dot-active");
+    }
+
+    function nextSlide() {
+      goToSlide((currentSlide + 1) % slideCount);
+    }
+
+    // Auto-advance
+    let slideInterval = setInterval(nextSlide, SLIDE_DURATION + TRANSITION_MS);
+
+    // --- Mobile Background Crossfade ---
+    const mobileBgs = document.querySelectorAll<HTMLElement>(".mobile-bg-img");
+    let currentMobileBg = 0;
+    const mobileBgCount = mobileBgs.length;
+
+    function nextMobileBg() {
+      if (mobileBgCount < 2) return;
+      mobileBgs[currentMobileBg].classList.remove("mobile-bg-active");
+      currentMobileBg = (currentMobileBg + 1) % mobileBgCount;
+      mobileBgs[currentMobileBg].classList.add("mobile-bg-active");
+    }
+
+    if (mobileBgCount > 1) {
+      setInterval(nextMobileBg, 2000 + 800); // 2s stay + 800ms fade
+    }
+
+    // Click on dots
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        clearInterval(slideInterval);
+        const idx = parseInt(dot.dataset.dot || "0", 10);
+        goToSlide(idx);
+        slideInterval = setInterval(nextSlide, SLIDE_DURATION + TRANSITION_MS);
+      });
+    });
+
+    // --- Track Lead on WhatsApp CTA click ---
+    const heroCta = document.getElementById("hero-whatsapp-cta");
+    if (heroCta) {
+      heroCta.addEventListener("click", () => {
+        if (typeof (window as any).trackMetaEvent === "function") {
+          (window as any).trackMetaEvent("Lead", {
+            content_name: "WhatsApp CTA - Hero Section",
+            content_category: "Lead Generation",
+          });
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  /* ==================================================================
+     HERO LAYOUT
+     ================================================================== */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    align-items: center;
+  }
+  .hero-left {
+    z-index: 10;
+    position: relative;
+  }
+  .hero-right {
+    z-index: 0;
+    position: relative;
+    margin-top: -1.5rem; /* Pull image up behind the CTA, but leave breathing room */
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .hero-right {
+      margin-top: 0;
+    }
+  }
+
+  /* ==================================================================
+     MOBILE BACKGROUND
+     ================================================================== */
+  .mobile-bg-img {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+  }
+  .mobile-bg-img.mobile-bg-active {
+    opacity: var(--bg-opacity, 0.5);
+  }
+
+  /* ==================================================================
+     BADGE
+     ================================================================== */
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+  }
+  @media (min-width: 1024px) {
+    .hero-badge {
+      font-size: 0.7rem;
+    }
+  }
+
+  /* ==================================================================
+     ROTATING HEADLINES
+     ================================================================== */
+  .headline-container {
+    position: relative;
+    min-height: 6.5rem;
+  }
+  @media (min-width: 640px) {
+    .headline-container {
+      min-height: 9rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .headline-container {
+      min-height: 12rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .headline-container {
+      min-height: 14rem;
+    }
+  }
+
+  .headline-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(calc(-50% + 12px));
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+    pointer-events: none;
+  }
+  .headline-text.headline-active {
+    opacity: 1;
+    transform: translateY(-50%);
+    pointer-events: auto;
+  }
+
+  /* ==================================================================
+     FEATURE BADGES GRID
+     ================================================================== */
+  .feature-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  @media (min-width: 1024px) {
+    .feature-grid {
+      justify-content: flex-start;
+      gap: 0.75rem;
+    }
+  }
+
+  .feature-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.625rem;
+    border-radius: 0.625rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: rgba(0, 0, 0, 0.4); /* 40% dark fill so it is visible */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(6px);
+    transition:
+      border-color 0.3s ease,
+      background 0.3s ease;
+  }
+  @media (min-width: 1024px) {
+    .feature-item {
+      justify-content: flex-start;
+      background: rgba(255, 255, 255, 0.03); /* Lighter bg for desktop */
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+  }
+  .feature-item:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .feature-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    color: var(--color-gold);
+  }
+
+  /* ==================================================================
+     CTA BUTTONS
+     ================================================================== */
+  .hero-cta-primary {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 50%, #25d366 100%);
+    background-size: 200% 200%;
+    box-shadow:
+      0 0 20px rgba(37, 211, 102, 0.3),
+      0 4px 15px rgba(37, 211, 102, 0.2);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      background-position 0.5s ease;
+    cursor: pointer;
+  }
+  .hero-cta-primary:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow:
+      0 0 30px rgba(37, 211, 102, 0.45),
+      0 8px 25px rgba(37, 211, 102, 0.3);
+    background-position: 100% 100%;
+  }
+  .hero-cta-primary:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .hero-cta-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .hero-cta-outline:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateY(-2px);
+  }
+  .hero-cta-outline:active {
+    transform: translateY(0);
+  }
+
+  /* ==================================================================
+     RIGHT HERO — IMAGE CAROUSEL (Balanced Side-by-Side)
+     ================================================================== */
+  .hero-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 560px; /* Balanced size */
+    margin-inline: auto;
+  }
+
+  .hero-image-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5; /* Taller aspect ratio to fit the image nicely */
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-carousel-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Show full original size without cropping */
+    object-position: center;
+    transform: scale(1.1); /* Perbesar sedikit 10% */
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .hero-carousel-img.hero-img-active {
+    opacity: 1;
+  }
+
+  .hero-image-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse,
+      rgba(120, 119, 198, 0.12) 0%,
+      transparent 70%
+    );
+    filter: blur(80px);
+    z-index: -2;
+  }
+
+  /* Slide indicators */
+  .hero-indicators {
+    position: absolute;
+    bottom: -1rem; /* Slightly below the image */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+  }
+
+  .hero-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    border: none;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+  .hero-dot.hero-dot-active {
+    width: 1.5rem;
+    background: var(--color-gold);
+  }
+  .hero-dot:hover {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  /* ==================================================================
+     SHINE ANIMATION — now global (see global.css)
+     ================================================================== */
+  /* @keyframes shine moved to src/styles/global.css */
+</style>

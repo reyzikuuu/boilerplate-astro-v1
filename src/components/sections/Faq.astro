@@ -1,0 +1,286 @@
+---
+// =============================================================================
+// FAQ SECTION — Accordion (HTML5 <details>/<summary>, zero JS)
+// =============================================================================
+
+const faqs = [
+  {
+    q: "Berapa minimal pemesanan (MOQ) untuk pembuatan kemeja custom?",
+    a: "Untuk menjaga efisiensi kapasitas pabrik dan memastikan standar kualitas jahitan premium, kami menerapkan minimal pemesanan sebanyak 24 pcs (2 lusin). Jumlah ini sangat ideal untuk kebutuhan seragam instansi, korporat, maupun komunitas.",
+  },
+  {
+    q: "Apakah kemeja ini nyaman dipakai untuk kegiatan lapangan (outdoor) dan di dalam kantor (indoor)?",
+    a: "Sangat nyaman. Kami secara khusus memilih bahan kemeja premium anti-gerah yang sifatnya adaptif terhadap cuaca. Material ini dirancang agar tetap sejuk dan breathable saat dipakai di bawah terik matahari (lapangan), namun memberikan kehangatan dan kenyamanan ekstra saat berada di ruangan ber-AC (kantor).",
+  },
+  {
+    q: "Apa keunggulan dari fitur Bordir 3D Presisi pada seragam produksi Anda?",
+    a: "Kami menggunakan teknologi mesin bordir komputer modern untuk menghasilkan bordir 3D timbul yang sangat padat, rapi, dan presisi. Detail bordir ini memastikan logo atau nama instansi Anda terlihat tegas, eksklusif, dan profesional dibandingkan menggunakan bordir datar konvensional.",
+  },
+  {
+    q: "Bagaimana jika instansi kami belum memiliki desain kemeja PDH atau Tactical?",
+    a: "Anda tidak perlu khawatir. Kami menyediakan fasilitas Free Desain Custom 100%. Anda cukup menceritakan identitas brand atau warna kebanggaan perusahaan Anda, dan tim desainer kami akan membuatkan visualisasi (mockup) kemeja yang gagah dan elegan sebelum masuk ke tahap produksi massal.",
+  },
+  {
+    q: "Berapa lama estimasi waktu produksi untuk pesanan partai besar?",
+    a: "Sebagai vendor konveksi berskala nasional, pabrik kami memiliki jadwal produksi yang terukur. Estimasi waktu pengerjaan normal adalah 14 hingga 21 hari kerja, tergantung pada antrean dan tingkat kerumitan desain. Kami memberikan komitmen penyelesaian yang tepat waktu (on-time) tanpa drama keterlambatan.",
+  },
+  {
+    q: "Apakah pabrik melayani pengiriman pesanan ke luar kota atau instansi di luar pulau?",
+    a: "Tentu saja. Kami adalah pabrik konveksi seragam se-Indonesia. Kami telah berpengalaman mengirimkan ratusan pesanan kemeja PDH, PDL, dan tactical ke berbagai kota, kabupaten, dan provinsi di seluruh Indonesia melalui mitra ekspedisi kargo darat, laut, dan udara yang aman dan berasuransi.",
+  },
+  {
+    q: "Bagaimana cara memulai konsultasi dan pemesanan?",
+    a: "Prosesnya sangat praktis dan tanpa ribet. Anda cukup mengklik tombol WhatsApp yang ada di halaman ini untuk terhubung langsung dengan Customer Service kami. Kami siap berdiskusi, memberikan rekomendasi bahan, dan menghitung estimasi biaya sesuai anggaran instansi Anda.",
+  },
+];
+---
+
+<section class="faq-section" id="faq">
+  <div class="container-page">
+
+    {/* Header */}
+    <div class="faq-header">
+      <p class="faq-eyebrow">FAQ</p>
+      <h2 class="faq-headline">
+        Pertanyaan yang <span class="text-gradient">Sering Ditanyakan</span>
+      </h2>
+      <p class="faq-sub">
+        Temukan jawaban dari pertanyaan yang paling sering diajukan oleh calon mitra kami
+      </p>
+    </div>
+
+    {/* Accordion List */}
+    <div class="faq-list">
+      {
+        faqs.map((item, i) => (
+          <details class="faq-item" id={`faq-${i + 1}`}>
+            <summary class="faq-question">
+              <span class="faq-q-number">{String(i + 1).padStart(2, "0")}</span>
+              <span class="faq-q-text">{item.q}</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </span>
+            </summary>
+            <div class="faq-answer">
+              <p>{item.a}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ==================================================================
+     SECTION
+     ================================================================== */
+  .faq-section {
+    position: relative;
+    z-index: 10;
+    padding: 4rem 0 5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  @media (min-width: 1024px) {
+    .faq-section {
+      padding: 6rem 0 7rem;
+    }
+  }
+
+  /* ==================================================================
+     HEADER
+     ================================================================== */
+  .faq-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+  @media (min-width: 1024px) {
+    .faq-header {
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  .faq-eyebrow {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    opacity: 0.7;
+    margin-bottom: 0.75rem;
+  }
+  @media (min-width: 1024px) {
+    .faq-eyebrow {
+      font-size: 0.7rem;
+    }
+  }
+
+  .faq-headline {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  @media (min-width: 640px) {
+    .faq-headline {
+      font-size: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .faq-headline {
+      font-size: 2.5rem;
+    }
+  }
+
+  .faq-sub {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.6;
+  }
+  @media (min-width: 1024px) {
+    .faq-sub {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* ==================================================================
+     ACCORDION LIST
+     ================================================================== */
+  .faq-list {
+    max-width: 780px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ==================================================================
+     FAQ ITEM (details/summary)
+     ================================================================== */
+  .faq-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .faq-item:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.3s ease;
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-question::marker {
+    display: none;
+    content: "";
+  }
+
+  .faq-question:hover .faq-q-text {
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .faq-question:hover .faq-q-number {
+    color: var(--color-gold);
+  }
+
+  .faq-q-number {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.2);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+    width: 1.5rem;
+    transition: color 0.3s ease;
+  }
+  @media (min-width: 1024px) {
+    .faq-q-number {
+      font-size: 0.75rem;
+    }
+  }
+
+  .faq-q-text {
+    flex: 1;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.4;
+    transition: color 0.3s ease;
+  }
+  @media (min-width: 1024px) {
+    .faq-q-text {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Chevron */
+  .faq-chevron {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.25);
+    transition: transform 0.35s ease, color 0.3s ease;
+  }
+  .faq-chevron svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Open state */
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+    color: var(--color-gold);
+  }
+  .faq-item[open] .faq-q-number {
+    color: var(--color-gold);
+  }
+  .faq-item[open] .faq-q-text {
+    color: #fff;
+  }
+
+  /* ==================================================================
+     ANSWER
+     ================================================================== */
+  .faq-answer {
+    padding: 0 0 1.5rem 2.375rem;
+    animation: faq-slide-down 0.3s ease;
+  }
+  @media (min-width: 1024px) {
+    .faq-answer {
+      padding-left: 2.5rem;
+    }
+  }
+
+  .faq-answer p {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.7;
+  }
+  @media (min-width: 1024px) {
+    .faq-answer p {
+      font-size: 0.85rem;
+    }
+  }
+
+  @keyframes faq-slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

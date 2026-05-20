@@ -1,0 +1,127 @@
+---
+// =============================================================================
+// SCHEMA MARKUP — Structured Data (JSON-LD)
+// =============================================================================
+// Komponen ini menambahkan structured data dalam format JSON-LD ke halaman.
+// Google menggunakan data ini untuk menampilkan "Rich Results" di SERP
+// (search engine results page), seperti star rating, FAQ, breadcrumb, dll.
+//
+// CARA PAKAI:
+// <SchemaMarkup type="website" />
+// <SchemaMarkup type="organization" />
+// <SchemaMarkup type="breadcrumb" breadcrumbs={[...]} />
+//
+// REFERENSI:
+// - https://developers.google.com/search/docs/appearance/structured-data
+// - https://schema.org/
+// =============================================================================
+
+import { siteConfig } from '@data/siteConfig';
+
+// --- Props ---
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface Props {
+  /** Tipe schema yang mau di-generate */
+  type: 'website' | 'organization' | 'breadcrumb' | 'product' | 'landing-page';
+  /** Data breadcrumb (hanya untuk type="breadcrumb") */
+  breadcrumbs?: BreadcrumbItem[];
+  /** Nama halaman (untuk breadcrumb) */
+  pageName?: string;
+  /** URL halaman saat ini */
+  pageUrl?: string;
+}
+
+const {
+  type,
+  breadcrumbs = [],
+  pageName = '',
+  pageUrl = '',
+} = Astro.props;
+
+// Current page URL
+const currentUrl = pageUrl || new URL(Astro.url.pathname, siteConfig.siteUrl).href;
+
+// =============================================================================
+// GENERATE SCHEMA berdasarkan type
+// =============================================================================
+
+// Schema WebSite — untuk homepage, membantu Google tampilkan sitelinks
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteConfig.name,
+  url: siteConfig.siteUrl,
+  description: siteConfig.description,
+  inLanguage: siteConfig.language,
+};
+
+// Schema Organization — informasi bisnis/brand
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteConfig.name,
+  url: siteConfig.siteUrl,
+  logo: new URL('/favicon.svg', siteConfig.siteUrl).href,
+  description: siteConfig.description,
+  sameAs: [
+    siteConfig.socials.instagram,
+    siteConfig.socials.facebook,
+    siteConfig.socials.tiktok,
+  ].filter(Boolean), // Hapus yang kosong
+};
+
+// Schema Breadcrumb — navigasi halaman (Google tampilkan di SERP)
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.siteUrl },
+    ...breadcrumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 2,
+      name: crumb.name,
+      item: crumb.url,
+    })),
+  ],
+};
+
+// Schema LandingPage — khusus landing page ads
+const landingPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: pageName || siteConfig.name,
+  url: currentUrl,
+  description: siteConfig.description,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: siteConfig.name,
+    url: siteConfig.siteUrl,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.name,
+    url: siteConfig.siteUrl,
+  },
+};
+
+// Pilih schema berdasarkan type
+const schemaMap: Record<string, object> = {
+  'website': websiteSchema,
+  'organization': organizationSchema,
+  'breadcrumb': breadcrumbSchema,
+  'product': websiteSchema, // Placeholder — extend sesuai kebutuhan
+  'landing-page': landingPageSchema,
+};
+
+const schema = schemaMap[type] || websiteSchema;
+---
+
+{/* Inject JSON-LD ke <head> — Google baca ini untuk Rich Results */}
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(schema)}
+/>

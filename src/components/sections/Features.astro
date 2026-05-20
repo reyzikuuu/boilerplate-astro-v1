@@ -1,0 +1,81 @@
+---
+// =============================================================================
+// FEATURES SECTION — Keunggulan / Value Proposition
+// =============================================================================
+// Section yang menjelaskan kenapa pengunjung harus memilih brand kamu.
+// Biasanya berisi 3-4 fitur/keunggulan utama dalam bentuk card.
+//
+// TIPS LANDING PAGE:
+// - Fokus pada MANFAAT buat customer, bukan fitur teknis
+// - Gunakan bahasa yang mudah dimengerti
+// - Tambahkan icon agar visual dan cepat dipahami
+// =============================================================================
+
+import Card from '@components/common/Card.astro';
+
+// Data features — bisa dipindahkan ke @data/ jika mau
+const features = [
+  {
+    icon: '🎨',
+    title: 'Desain Eksklusif',
+    description:
+      'Setiap piece dirancang dengan detail tinggi, memastikan kamu tampil beda dan percaya diri di setiap kesempatan.',
+  },
+  {
+    icon: '✨',
+    title: 'Material Premium',
+    description:
+      'Menggunakan bahan berkualitas tinggi yang nyaman dipakai seharian, tahan lama, dan tidak mudah pudar.',
+  },
+  {
+    icon: '🚚',
+    title: 'Pengiriman Cepat',
+    description:
+      'Pesananmu diproses dan dikirim dalam 1-2 hari kerja. Free ongkir untuk pembelian di atas Rp200.000.',
+  },
+  {
+    icon: '🛡️',
+    title: 'Garansi Kepuasan',
+    description:
+      'Tidak puas? Kami berikan garansi uang kembali 100% dalam 7 hari setelah barang diterima.',
+  },
+];
+---
+
+<section id="products" class="py-16 md:py-24 lg:py-32 bg-surface-alt">
+  <div class="container-page">
+    {/* Section Header */}
+    <div class="text-center max-w-2xl mx-auto mb-12 md:mb-16">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4">
+        Kenapa Pilih
+        <span class="text-gradient"> {" "}Bradwear?</span>
+      </h2>
+      <p class="text-lg text-neutral-600 leading-relaxed">
+        Kami berkomitmen memberikan produk terbaik dengan pengalaman belanja yang menyenangkan.
+      </p>
+    </div>
+
+    {/* Feature Cards Grid */}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+      {features.map((feature, index) => (
+        <Card variant="elevated" hoverable padding="lg">
+          {/* Icon */}
+          <div
+            class="text-4xl mb-4"
+            style={`animation-delay: ${index * 0.1}s;`}
+          >
+            {feature.icon}
+          </div>
+          {/* Title */}
+          <h3 class="text-lg font-bold text-neutral-900 mb-2">
+            {feature.title}
+          </h3>
+          {/* Description */}
+          <p class="text-sm text-neutral-600 leading-relaxed">
+            {feature.description}
+          </p>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>

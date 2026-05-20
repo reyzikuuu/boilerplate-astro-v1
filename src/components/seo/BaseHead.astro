@@ -1,0 +1,145 @@
+---
+// =============================================================================
+// BASE HEAD — Komponen SEO <head>
+// =============================================================================
+// Komponen ini mengatur semua tag di dalam <head> halaman.
+// Termasuk: title, meta description, Open Graph, Twitter Card, canonical URL.
+//
+// CARA PAKAI (di Layout):
+// <BaseHead title="Nama Halaman" description="Deskripsi halaman" />
+//
+// TIPS SEO:
+// - Title: 50-60 karakter (termasuk nama brand)
+// - Description: 120-160 karakter
+// - Setiap halaman HARUS punya title & description UNIK!
+// =============================================================================
+
+import { siteConfig } from '@data/siteConfig';
+
+// --- Props yang bisa diatur per halaman ---
+interface Props {
+  /** Judul halaman (wajib) — akan tampil di tab browser & Google */
+  title: string;
+  /** Deskripsi halaman (untuk Google search results) */
+  description?: string;
+  /** URL gambar untuk social sharing (Facebook, Twitter, WhatsApp) */
+  ogImage?: string;
+  /** URL canonical (untuk menghindari duplicate content) */
+  canonicalUrl?: string;
+  /** Tipe halaman untuk Open Graph */
+  ogType?: 'website' | 'article' | 'product';
+  /** Apakah halaman ini boleh di-index Google? (default: true) */
+  noIndex?: boolean;
+}
+
+// Destructure props dengan default values
+const {
+  title,
+  description = siteConfig.description,
+  ogImage = siteConfig.ogImage,
+  canonicalUrl,
+  ogType = 'website',
+  noIndex = false,
+} = Astro.props;
+
+// Format title: "Nama Halaman | Brand Name"
+const formattedTitle = title === siteConfig.name
+  ? `${siteConfig.name} — ${siteConfig.tagline}`
+  : `${title} | ${siteConfig.name}`;
+
+// Generate canonical URL (URL resmi halaman ini)
+const canonical = canonicalUrl || new URL(Astro.url.pathname, siteConfig.siteUrl).href;
+
+// Generate OG image URL (harus absolute URL untuk social media)
+const ogImageUrl = ogImage.startsWith('http')
+  ? ogImage
+  : new URL(ogImage, siteConfig.siteUrl).href;
+---
+
+{/* ========================================================================
+    META TAGS DASAR
+    ======================================================================== */}
+
+{/* Encoding karakter — harus selalu UTF-8 */}
+<meta charset="UTF-8" />
+
+{/* Responsive viewport — WAJIB untuk mobile */}
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+{/* Title tag — PALING PENTING untuk SEO! */}
+<title>{formattedTitle}</title>
+
+{/* Meta description — muncul di Google search results */}
+<meta name="description" content={description} />
+
+{/* Keywords — tidak terlalu berpengaruh di Google tapi tetap best practice */}
+<meta name="keywords" content={siteConfig.keywords} />
+
+{/* Author */}
+<meta name="author" content={siteConfig.name} />
+
+{/* Canonical URL — mencegah duplicate content */}
+<link rel="canonical" href={canonical} />
+
+{/* Robots — apakah halaman boleh di-index? */}
+{noIndex ? (
+  <meta name="robots" content="noindex, nofollow" />
+) : (
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+)}
+
+{/* Language */}
+<meta name="language" content={siteConfig.language} />
+<meta http-equiv="content-language" content={siteConfig.language} />
+
+{/* ========================================================================
+    FAVICON & ICONS
+    ======================================================================== */}
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+<link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
+
+{/* ========================================================================
+    OPEN GRAPH — Facebook, LinkedIn, WhatsApp Preview
+    ======================================================================== */}
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={formattedTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={siteConfig.name} />
+<meta property="og:locale" content={siteConfig.locale} />
+
+{/* ========================================================================
+    TWITTER CARD — Twitter/X Preview
+    ======================================================================== */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={formattedTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+{siteConfig.twitterHandle && (
+  <meta name="twitter:site" content={`@${siteConfig.twitterHandle}`} />
+)}
+
+{/* ========================================================================
+    PERFORMANCE HINTS
+    ======================================================================== */}
+{/* Preconnect: membuka koneksi ke domain yang akan dipakai */}
+{/* Ini mempercepat loading font, analytics, dll */}
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+{/* DNS Prefetch: resolve DNS lebih awal */}
+<link rel="dns-prefetch" href="https://connect.facebook.net" />
+
+{/* LCP Preload — gambar utama above-the-fold (percepat LCP score) */}
+<link rel="preload" as="image" href="/hero-desktop-01.webp" fetchpriority="high" media="(min-width: 1024px)" />
+<link rel="preload" as="image" href="/mobile-hero/mobile-hero-1.webp" fetchpriority="high" media="(max-width: 1023px)" />
+
+{/* Theme color: warna bar di browser mobile — sesuai brand dark background */}
+<meta name="theme-color" content="#0a0a0a" />
+
+{/* Generator — Astro branding (opsional) */}
+<meta name="generator" content={Astro.generator} />

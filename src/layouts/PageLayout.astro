@@ -1,0 +1,65 @@
+---
+// =============================================================================
+// PAGE LAYOUT — Layout untuk Halaman Konten
+// =============================================================================
+// Layout ini extends BaseLayout dan menambahkan wrapper konten standar
+// dengan breadcrumb, max-width, dan spacing yang konsisten.
+//
+// CARA PAKAI:
+// ===
+// import PageLayout from '@layouts/PageLayout.astro';
+// ===
+// <PageLayout title="About Us" description="Tentang kami">
+//   <h1>About Us</h1>
+//   <p>Konten halaman...</p>
+// </PageLayout>
+// =============================================================================
+
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  /** Judul halaman */
+  title: string;
+  /** Deskripsi SEO */
+  description?: string;
+  /** Gambar OG */
+  ogImage?: string;
+  /** Tampilkan breadcrumb? */
+  showBreadcrumb?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage,
+  showBreadcrumb = true,
+} = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  schemaType="landing-page"
+>
+  <!-- Container konten halaman -->
+  <div class="container-page py-12 md:py-16 lg:py-20">
+    <!-- Breadcrumb navigation — membantu user & SEO -->
+    {showBreadcrumb && (
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex items-center gap-2 text-sm text-neutral-500">
+          <li>
+            <a href="/" class="hover:text-primary transition-colors">Home</a>
+          </li>
+          <li aria-hidden="true" class="text-neutral-300">/</li>
+          <li>
+            <span class="text-neutral-700 font-medium">{title}</span>
+          </li>
+        </ol>
+      </nav>
+    )}
+
+    <!-- Konten halaman -->
+    <slot />
+  </div>
+</BaseLayout>

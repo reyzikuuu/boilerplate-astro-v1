@@ -1,0 +1,296 @@
+---
+// =============================================================================
+// WHY US SECTION — Keunggulan Bradwear
+// =============================================================================
+
+const features = [
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg>`,
+    title: "Custom Design",
+    desc: "Eksklusif sesuai branding perusahaan Anda",
+    accent: "gold",
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>`,
+    title: "Bordir & Print Teknologi Terbaru",
+    desc: "Hasil rapi, tajam, tebal & presisi tinggi",
+    accent: "gold",
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456Z" /></svg>`,
+    title: "Bahan Grade Terbaik",
+    desc: "Nyaman dipakai seharian, outdoor maupun indoor",
+    accent: "gold",
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>`,
+    title: "Tanpa MOQ / Bisa Satuan",
+    desc: "Cocok buat profesional individu yang mau tampil eksklusif",
+    accent: "gold",
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>`,
+    title: "Proses Cepat & Transparan",
+    desc: "Komunikasi lancar, anti drama — produksi 5-7 hari kerja",
+    accent: "gold",
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5a17.92 17.92 0 0 1-8.716-2.247m0 0A8.966 8.966 0 0 1 3 12c0-1.264.26-2.466.732-3.558" /></svg>`,
+    title: "Pengiriman Nasional & Mancanegara",
+    desc: "Bradwear sudah siap melayani sampai tingkat internasional",
+    accent: "gold",
+  },
+];
+---
+
+<section class="whyus-section" id="keunggulan">
+  <div class="container-page">
+    {/* Header */}
+    <div class="whyus-header">
+      <p class="whyus-eyebrow">KEUNGGULAN BRADWEAR</p>
+      <h2 class="whyus-headline">
+        Kami Ada untuk <span class="text-gradient">Anda</span>
+      </h2>
+      <p class="whyus-sub">
+        Solusi konveksi profesional dengan standar kualitas perusahaan
+        multinasional
+      </p>
+    </div>
+
+    {/* Feature Grid */}
+    <div class="whyus-grid">
+      {
+        features.map((item, i) => (
+          <div class="whyus-card" style={`--delay: ${i * 0.08}s`}>
+            <div class="card-icon-wrap">
+              <div class="card-icon" set:html={item.icon} />
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">{item.title}</h3>
+              <p class="card-desc">{item.desc}</p>
+            </div>
+            {/* Hover glow */}
+            <div class="card-glow" aria-hidden="true" />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ==================================================================
+     SECTION
+     ================================================================== */
+  .whyus-section {
+    position: relative;
+    z-index: 10;
+    padding: 4rem 0 5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  @media (min-width: 1024px) {
+    .whyus-section {
+      padding: 6rem 0 7rem;
+    }
+  }
+
+  /* ==================================================================
+     HEADER
+     ================================================================== */
+  .whyus-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    max-width: 560px;
+    margin-inline: auto;
+  }
+  @media (min-width: 1024px) {
+    .whyus-header {
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  .whyus-eyebrow {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    opacity: 0.7;
+    margin-bottom: 0.75rem;
+  }
+  @media (min-width: 1024px) {
+    .whyus-eyebrow {
+      font-size: 0.7rem;
+    }
+  }
+
+  .whyus-headline {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 640px) {
+    .whyus-headline {
+      font-size: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .whyus-headline {
+      font-size: 2.5rem;
+    }
+  }
+
+  .whyus-sub {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.6;
+  }
+  @media (min-width: 1024px) {
+    .whyus-sub {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* ==================================================================
+     GRID
+     ================================================================== */
+  .whyus-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  @media (min-width: 640px) {
+    .whyus-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .whyus-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  /* ==================================================================
+     CARD
+     ================================================================== */
+  .whyus-card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    transition:
+      border-color 0.35s ease,
+      background 0.35s ease,
+      transform 0.35s ease;
+    animation: card-fadein 0.5s ease both;
+    animation-delay: var(--delay);
+  }
+  .whyus-card:hover {
+    border-color: rgba(245, 158, 11, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+  }
+
+  @keyframes card-fadein {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Icon container */
+  .card-icon-wrap {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.12);
+    transition:
+      background 0.3s ease,
+      border-color 0.3s ease;
+  }
+  .whyus-card:hover .card-icon-wrap {
+    background: rgba(245, 158, 11, 0.14);
+    border-color: rgba(245, 158, 11, 0.25);
+  }
+
+  .card-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-gold);
+  }
+  .card-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Content */
+  .card-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+  }
+  @media (min-width: 1024px) {
+    .card-title {
+      font-size: 0.9rem;
+    }
+  }
+
+  .card-desc {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.5;
+  }
+  @media (min-width: 1024px) {
+    .card-desc {
+      font-size: 0.78rem;
+    }
+  }
+
+  /* Hover glow effect */
+  .card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      rgba(245, 158, 11, 0.06) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .whyus-card:hover .card-glow {
+    opacity: 1;
+  }
+</style>
