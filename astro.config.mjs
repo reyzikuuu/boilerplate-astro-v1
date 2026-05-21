@@ -14,9 +14,6 @@ import { defineConfig } from 'astro/config';
 // Tailwind CSS v4 menggunakan plugin Vite (bukan @astrojs/tailwind yang deprecated)
 import tailwindcss from '@tailwindcss/vite';
 
-// Adapter untuk deploy ke Cloudflare Pages
-import cloudflare from '@astrojs/cloudflare';
-
 // Auto-generate sitemap.xml untuk SEO (membantu Google index halaman)
 import sitemap from '@astrojs/sitemap';
 
@@ -37,20 +34,10 @@ export default defineConfig({
   // --------------------------------------------------------------------------
   // OUTPUT MODE
   // --------------------------------------------------------------------------
-  // 'server' = Server-Side Rendering (diperlukan untuk API endpoint CAPI)
-  // 'static' = Full static (tanpa server) — tidak bisa pakai API endpoint
-  // 'hybrid' = Campuran (default static, bisa opt-in SSR per halaman)
-  //
-  // Kita pakai 'server' karena butuh endpoint /api/meta-capi untuk
-  // Conversion API Meta Ads
-  output: 'server',
-
-  // --------------------------------------------------------------------------
-  // CLOUDFLARE ADAPTER
-  // --------------------------------------------------------------------------
-  // Adapter ini memungkinkan website berjalan di Cloudflare Pages/Workers.
-  // Mendukung SSR, API endpoints, dan edge functions.
-  adapter: cloudflare(),
+  // 'static' = Full static (semua halaman di-generate jadi HTML saat build)
+  // API endpoint Meta CAPI ditangani oleh Cloudflare Pages Functions
+  // (file di folder /functions/) sehingga tidak butuh SSR dari Astro.
+  output: 'static',
 
   // --------------------------------------------------------------------------
   // TRAILING SLASH
