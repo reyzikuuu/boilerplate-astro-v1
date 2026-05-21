@@ -29,7 +29,7 @@ export default defineConfig({
   // --------------------------------------------------------------------------
   // URL production website kamu. WAJIB diisi untuk sitemap & canonical URL.
   // Ganti dengan domain asli saat deploy.
-  site: 'https://example.com',
+  site: 'https://bradwear-lp.pages.dev',
 
   // --------------------------------------------------------------------------
   // OUTPUT MODE

@@ -23,7 +23,7 @@ export const siteConfig = {
     'Tingkatkan citra perusahaan dengan kemeja custom bordir 3D. Material super premium, melayani pengiriman seluruh Indonesia untuk instansi & swasta.',
 
   /** URL production website (GANTI saat deploy!) */
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://bradwear-lp.pages.dev',
 
   /** Bahasa utama website (untuk SEO & accessibility) */
   locale: 'id_ID',
