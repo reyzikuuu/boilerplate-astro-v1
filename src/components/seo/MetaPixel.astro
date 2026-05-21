@@ -160,26 +160,17 @@ const pixelId = siteConfig.metaPixelId;
           fbc: getCookie('_fbc') || null, // Facebook click ID (dari URL ?fbclid=)
         };
 
-        // Kirim ke server endpoint (non-blocking, pakai sendBeacon atau fetch)
-        if (navigator.sendBeacon) {
-          // sendBeacon: reliable bahkan saat user navigate away
-          navigator.sendBeacon(
-            '/api/contact',
-            new Blob([JSON.stringify(capiPayload)], {
-              type: 'application/json',
-            })
-          );
-        } else {
-          // Fallback ke fetch
-          fetch('/api/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(capiPayload),
-            keepalive: true, // Tetap kirim meskipun halaman ditutup
-          }).catch(() => {
-            // Gagal kirim CAPI — tidak fatal, Pixel sudah track
-          });
-        }
+        // Kirim ke server endpoint (non-blocking)
+        // Kita menggunakan fetch dengan keepalive: true agar request tetap terkirim
+        // meskipun pengguna langsung berpindah halaman (mirip sendBeacon tapi lebih reliable untuk JSON).
+        fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(capiPayload),
+          keepalive: true,
+        }).catch((err) => {
+          console.error('[Meta CAPI] Failed to send:', err);
+        });
       };
     </script>
   </Fragment>
