@@ -70,17 +70,4 @@ import Button from '@components/common/Button.astro';
   </div>
 </section>
 
-{/* Track Lead saat klik CTA WhatsApp */}
-<script>
-  const ctaFinal = document.getElementById('cta-whatsapp-final');
-  if (ctaFinal) {
-    ctaFinal.addEventListener('click', () => {
-      if (typeof window.trackMetaEvent === 'function') {
-        window.trackMetaEvent('Lead', {
-          content_name: 'WhatsApp CTA - Final Section',
-          content_category: 'Lead Generation',
-        });
-      }
-    });
-  }
-</script>
+

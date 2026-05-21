@@ -421,19 +421,6 @@ import { getWhatsAppUrl } from "@data/siteConfig";
         slideInterval = setInterval(nextSlide, SLIDE_DURATION + TRANSITION_MS);
       });
     });
-
-    // --- Track Lead on WhatsApp CTA click ---
-    const heroCta = document.getElementById("hero-whatsapp-cta");
-    if (heroCta) {
-      heroCta.addEventListener("click", () => {
-        if (typeof (window as any).trackMetaEvent === "function") {
-          (window as any).trackMetaEvent("Lead", {
-            content_name: "WhatsApp CTA - Hero Section",
-            content_category: "Lead Generation",
-          });
-        }
-      });
-    }
   });
 </script>
 
