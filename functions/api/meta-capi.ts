@@ -27,7 +27,7 @@ interface Env {
 }
 
 // Hanya terima POST request
-export const onRequestPost: PagesFunction<Env> = async (context) => {
+export const onRequestPost = async (context: { request: Request; env: Env }) => {
   try {
     const { request, env } = context;
 
@@ -123,7 +123,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 };
 
 // Tolak method selain POST
-export const onRequest: PagesFunction = async () => {
+export const onRequest = async () => {
   return new Response(
     JSON.stringify({ error: 'Method not allowed' }),
     { status: 405, headers: { 'Content-Type': 'application/json' } }
